@@ -2,7 +2,10 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
-import { SOUND_STYLES, SOUND_CUES, createSoundEngine, getCueDuration, renderCue } from '../dist/core/index.js';
+import {
+  SOUND_STYLES, SOUND_CUES, DEFAULT_SOUND_PREFERENCES, createSoundEngine, getCueDuration, loadSoundPreferences, renderCue,
+  saveSoundPreferences,
+} from '../dist/core/index.js';
 import { readPlan, soundPlanSchema, validatePlan } from './plan-contract.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -17,6 +20,8 @@ const engine = createSoundEngine({ style: SOUND_STYLES[0] });
 const state = engine.getState();
 assert.deepEqual({ enabled: state.enabled, volume: state.volume, muted: state.muted }, catalog.defaults);
 engine.dispose();
+assert.deepEqual({ ...DEFAULT_SOUND_PREFERENCES }, { volume: catalog.defaults.volume, muted: catalog.defaults.muted },
+  'Saved-preference defaults differ from the catalog');
 assert.deepEqual(soundPlanSchema.properties.selectedStyle.enum, [...SOUND_STYLES, 'off']);
 assert.deepEqual(soundPlanSchema.properties.feedback.items.properties.cue.enum, [...SOUND_CUES]);
 assert.deepEqual(soundPlanSchema.properties.controls.anyOf[0].required, catalog.controls);
@@ -24,7 +29,9 @@ for (const key of ['enabled', 'volume', 'muted']) {
   assert.equal(soundPlanSchema.properties.defaults.properties[key].const, catalog.defaults[key]);
 }
 assert.equal(soundPlanSchema.properties.userChoice.properties.confirmed.const, true);
-for (const api of [createSoundEngine, getCueDuration, renderCue]) assert.equal(typeof api, 'function');
+for (const api of [createSoundEngine, getCueDuration, renderCue, loadSoundPreferences, saveSoundPreferences]) {
+  assert.equal(typeof api, 'function');
+}
 let validExamples = 0;
 let invalidExamples = 0;
 for (const file of readdirSync(join(root, 'examples'))) {
