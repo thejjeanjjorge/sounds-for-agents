@@ -101,6 +101,16 @@
       "name": "createSoundEngine",
       "framework": "independent",
       "usage": "A sound engine with the same explicit enablement and defaults."
+    },
+    {
+      "name": "loadSoundPreferences",
+      "framework": "independent",
+      "usage": "Restore a saved volume and mute. Never restores whether sound is enabled, so it cannot start audio."
+    },
+    {
+      "name": "saveSoundPreferences",
+      "framework": "independent",
+      "usage": "Save volume and mute only; never throws when storage is blocked."
     }
   ],
   "constraints": [

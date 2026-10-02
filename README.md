@@ -63,6 +63,7 @@ A few helpers for real apps, all additive (see the [API guide](skills/sounds-for
 
 - `useSoundPlayer()` gives components that only trigger cues a stable `{ play, stop }`, so they do not re-render as the volume moves. `QueryAction` above could use it instead of `useSounds()`.
 - `SoundControls` marks each control with `data-sound-control`, so CSS can target `toggle`, `mute`, `volume`, `stop`, and `status` by name, and takes an `onEnabled` callback, for example to play a short confirmation when sound turns on.
+- `loadSoundPreferences` and `saveSoundPreferences` remember volume and mute between visits. They never store whether sound is enabled, so restoring preferences cannot start audio.
 
 ## Framework-independent core
 

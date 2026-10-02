@@ -5,3 +5,7 @@ export {
 } from "./types";
 export { createSoundEngine } from "./engine";
 export { getCueDuration, renderCue } from "./synth";
+export {
+  DEFAULT_SOUND_PREFERENCES, parseSoundPreferences, loadSoundPreferences, saveSoundPreferences,
+  type SoundPreferences, type SoundPreferenceStorage,
+} from "./preferences";
