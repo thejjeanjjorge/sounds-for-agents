@@ -88,9 +88,14 @@
       "usage": "Play a cue once from a real event handler and read the resolved sound state."
     },
     {
+      "name": "useSoundPlayer",
+      "framework": "react",
+      "usage": "A stable play and stop for components that trigger cues but do not show sound state."
+    },
+    {
       "name": "SoundControls",
       "framework": "react",
-      "usage": "Unstyled enable/disable, mute, volume, and stop controls."
+      "usage": "Unstyled enable/disable, mute, volume, and stop controls, with data-sound-control hooks for styling and an onEnabled callback."
     },
     {
       "name": "createSoundEngine",

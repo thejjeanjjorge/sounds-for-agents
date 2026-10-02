@@ -58,6 +58,10 @@ Call `enable` directly from a trusted user action. Do not call it on mount, impo
 
 Call `play` from the event confirming an actual result, rather than an effect that can replay on remount. Keep success/error messages, progress, and next actions available without sound. Do not remount a stateful editor to add audio.
 
+`useSoundPlayer()` returns a stable `{ play, stop }` for components that only trigger cues. Unlike `useSounds()`, its identity never changes, so those components do not re-render when the volume moves or sound turns on, and it keeps working after Strict Mode replaces the engine. Use `useSounds()` where sound state is shown, such as the controls.
+
+`SoundControls` marks each control with `data-sound-control` (`toggle`, `mute`, `volume-label`, `volume`, `stop`, `status`), the group with `data-sound-status`, and the toggle with `data-sound-enabled`, so app CSS can target controls by name instead of element order. Its optional `onEnabled` callback runs once when the Enable sounds button succeeds, for example to play a short confirmation cue (the engine is live by then). It does not run when audio could not start.
+
 ## Core and renderer
 
 `createSoundEngine({ style, volume?, muted? })` creates the framework-independent engine. It starts disabled, with volume 0.25 and muted false unless explicitly configured. Construction creates no live audio context. It exposes the same control/playback methods plus `getState()`, `subscribe(listener)` (returns an unsubscribe function), and `dispose()`. Dispose the engine when its owning surface is removed. Use the same trusted enablement boundary and accessible controls as the React integration.

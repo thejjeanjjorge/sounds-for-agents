@@ -59,6 +59,11 @@ function App() {
 
 `executeQuery` and `showResult` above stand for the consuming app's existing logic. Playback returns a result and gracefully declines when sound is disabled, muted, interrupted, or already playing.
 
+A few helpers for real apps, all additive (see the [API guide](skills/sounds-for-agents/references/api.md)):
+
+- `useSoundPlayer()` gives components that only trigger cues a stable `{ play, stop }`, so they do not re-render as the volume moves. `QueryAction` above could use it instead of `useSounds()`.
+- `SoundControls` marks each control with `data-sound-control`, so CSS can target `toggle`, `mute`, `volume`, `stop`, and `status` by name, and takes an `onEnabled` callback, for example to play a short confirmation when sound turns on.
+
 ## Framework-independent core
 
 ```ts
