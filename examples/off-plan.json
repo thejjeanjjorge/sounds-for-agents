@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "selectedStyle": "off",
+  "userChoice": {
+    "confirmed": true,
+    "style": "off"
+  },
+  "defaults": {
+    "enabled": false,
+    "volume": 0.25,
+    "muted": false
+  },
+  "controls": null,
+  "feedback": [],
+  "notes": [
+    "The user selected Off. Do not add sound integration to the consuming app.",
+    "This fixture illustrates the recorded choice format and is not human authorization."
+  ]
+}

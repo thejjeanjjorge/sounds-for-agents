@@ -1,0 +1,64 @@
+{
+  "name": "@sounds-for-agents/react",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Original interface sound cues, user choice contracts, and an agent skill with a listening playground.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "repository": { "type": "git", "url": "git+https://github.com/thejjeanjjorge/sounds-for-agents.git" },
+  "engines": { "node": ">=22.12.0" },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": { "sounds-for-agents-validate": "./scripts/validate-plan.mjs" },
+  "exports": {
+    ".": {
+      "import": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+      "require": { "types": "./dist/index.d.cts", "default": "./dist/index.cjs" }
+    },
+    "./core": {
+      "import": { "types": "./dist/core/index.d.ts", "default": "./dist/core/index.js" },
+      "require": { "types": "./dist/core/index.d.cts", "default": "./dist/core/index.cjs" }
+    },
+    "./catalog": "./sounds.catalog.json",
+    "./plan.schema.json": "./schemas/sound-plan.schema.json",
+    "./skill": "./skills/sounds-for-agents/SKILL.md",
+    "./playground": "./playground-dist/index.html"
+  },
+  "files": ["dist", "playground-dist", "sounds.catalog.json", "schemas", "skills", "examples", "scripts/plan-contract.mjs", "scripts/validate-plan.mjs"],
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5186",
+    "preview": "vite preview --host 127.0.0.1 --port 5186",
+    "build:library": "tsup",
+    "build:playground": "vite build",
+    "build": "npm run build:library && npm run build:playground",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:audio": "npm run build:library && node scripts/check-audio.mjs",
+    "test:browser": "playwright test",
+    "plan:validate": "node scripts/validate-plan.mjs",
+    "agent:check": "npm run build:library && node scripts/check-agent-contract.mjs",
+    "check": "npm run typecheck && npm test && npm run build && node scripts/check-agent-contract.mjs",
+    "prepare": "npm run build"
+  },
+  "dependencies": { "ajv": "^8.17.1" },
+  "peerDependencies": { "react": "^18.2.0 || ^19.0.0" },
+  "peerDependenciesMeta": { "react": { "optional": true } },
+  "overrides": { "esbuild": "0.28.2" },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "jsdom": "^27.0.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "tsup": "8.5.1",
+    "typescript": "~5.8.3",
+    "vite": "8.3.2",
+    "vitest": "5.0.3"
+  }
+}

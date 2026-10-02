@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "package": "@sounds-for-agents/react",
+  "packageVersion": "0.1.0",
+  "styles": [
+    {
+      "id": "soft",
+      "label": "Soft",
+      "description": "Warm, rounded tones with gentle edges for restrained feedback."
+    },
+    {
+      "id": "tactile",
+      "label": "Tactile",
+      "description": "Compact, muted percussive tones with a subtle physical tick."
+    },
+    {
+      "id": "playful",
+      "label": "Playful",
+      "description": "Rounded plucks with a little brightness and a more expressive feel."
+    }
+  ],
+  "cues": [
+    {
+      "id": "success",
+      "label": "Success",
+      "meaning": "A real action or validation succeeded.",
+      "example": "A submitted SQL answer is confirmed correct."
+    },
+    {
+      "id": "error",
+      "label": "Error",
+      "meaning": "A real submitted action failed or needs correction.",
+      "example": "A submitted SQL answer produces a confirmed validation error."
+    },
+    {
+      "id": "complete",
+      "label": "Complete",
+      "meaning": "A meaningful milestone completes once.",
+      "example": "A chapter first becomes complete after progress is saved."
+    },
+    {
+      "id": "notification",
+      "label": "Notification",
+      "meaning": "An actionable event requires attention.",
+      "example": "A requested task finishes and its visible notification becomes available."
+    }
+  ],
+  "defaults": {
+    "enabled": false,
+    "volume": 0.25,
+    "muted": false
+  },
+  "userChoicePolicy": {
+    "scope": "Before integrating sound into a consuming app",
+    "options": [
+      "soft",
+      "tactile",
+      "playful",
+      "off"
+    ],
+    "playableAuditionRequired": true,
+    "explicitChoiceRequired": true,
+    "reuseExistingExplicitChoice": true,
+    "pendingAnswerGrantsApproval": false,
+    "offBehavior": "Do not add consuming-app sound integration.",
+    "previewPermission": "A preview audition does not enable sound for users of the consuming app.",
+    "validationLimit": "Plan validation checks recorded structure and does not prove human consent."
+  },
+  "controls": [
+    "enable",
+    "disable",
+    "mute",
+    "volume",
+    "stop"
+  ],
+  "integrations": [
+    {
+      "name": "SoundsProvider",
+      "framework": "react",
+      "requiredProps": [
+        "style"
+      ],
+      "usage": "Stable app boundary; starts disabled with volume 0.25."
+    },
+    {
+      "name": "useSounds",
+      "framework": "react",
+      "usage": "Play a cue once from a real event handler and read the resolved sound state."
+    },
+    {
+      "name": "SoundControls",
+      "framework": "react",
+      "usage": "Unstyled enable/disable, mute, volume, and stop controls."
+    },
+    {
+      "name": "createSoundEngine",
+      "framework": "independent",
+      "usage": "A sound engine with the same explicit enablement and defaults."
+    }
+  ],
+  "constraints": [
+    "Visible feedback must remain available without sound.",
+    "Enable live audio only from a trusted user interaction.",
+    "No autoplay, continuous loops, hover sounds, or typing sounds.",
+    "Only one cue may be active; stop and disable must cancel pending notes.",
+    "Sound preferences are independent of reduced-motion preferences.",
+    "Map cues to real events once; do not fake failures or replay cues on render."
+  ],
+  "playground": "playground-dist/index.html",
+  "planSchema": "schemas/sound-plan.schema.json",
+  "skill": "skills/sounds-for-agents/SKILL.md"
+}

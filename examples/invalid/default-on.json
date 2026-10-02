@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "selectedStyle": "soft",
+  "userChoice": {
+    "confirmed": true,
+    "style": "soft"
+  },
+  "defaults": {
+    "enabled": true,
+    "volume": 0.25,
+    "muted": false
+  },
+  "controls": {
+    "enable": "Sound settings enable button",
+    "disable": "Sound settings disable button",
+    "mute": "Sound settings mute button",
+    "volume": "Sound settings volume slider",
+    "stop": "Sound settings stop button"
+  },
+  "feedback": [
+    {
+      "id": "query-correct",
+      "cue": "success",
+      "target": "Submitted query validation handler",
+      "trigger": "The validator confirms the submitted answer is correct",
+      "visibleFeedback": "Show a textual Correct result alongside the query output",
+      "oncePerEvent": true
+    },
+    {
+      "id": "query-error",
+      "cue": "error",
+      "target": "Submitted query validation handler",
+      "trigger": "The validator confirms the submitted answer needs correction",
+      "visibleFeedback": "Show the actual validation error in text",
+      "oncePerEvent": true
+    },
+    {
+      "id": "chapter-complete",
+      "cue": "complete",
+      "target": "Chapter progress update handler",
+      "trigger": "A chapter first becomes complete after its progress is saved",
+      "visibleFeedback": "Show a Chapter complete message and the next lesson action",
+      "oncePerEvent": true
+    }
+  ],
+  "notes": [
+    "This is an illustrative contract fixture. Its confirmation record is not authorization to change an app.",
+    "Keep the SQL editor mounted and do not play cues for typing, hovering, or repeated renders."
+  ]
+}

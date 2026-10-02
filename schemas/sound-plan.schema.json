@@ -1,0 +1,343 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/thejjeanjjorge/sounds-for-agents/blob/main/schemas/sound-plan.schema.json",
+  "title": "Sounds for Agents integration plan",
+  "description": "Checks a recorded integration choice and implementation contract; does not establish human consent.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "selectedStyle",
+    "userChoice",
+    "defaults",
+    "controls",
+    "feedback"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "selectedStyle": {
+      "enum": [
+        "soft",
+        "tactile",
+        "playful",
+        "off"
+      ]
+    },
+    "userChoice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "confirmed",
+        "style"
+      ],
+      "properties": {
+        "confirmed": {
+          "type": "boolean",
+          "const": true
+        },
+        "style": {
+          "enum": [
+            "soft",
+            "tactile",
+            "playful",
+            "off"
+          ]
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "volume",
+        "muted"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "const": false
+        },
+        "volume": {
+          "type": "number",
+          "const": 0.25
+        },
+        "muted": {
+          "type": "boolean",
+          "const": false
+        }
+      }
+    },
+    "controls": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enable",
+            "disable",
+            "mute",
+            "volume",
+            "stop"
+          ],
+          "properties": {
+            "enable": {
+              "type": "string",
+              "minLength": 1
+            },
+            "disable": {
+              "type": "string",
+              "minLength": 1
+            },
+            "mute": {
+              "type": "string",
+              "minLength": 1
+            },
+            "volume": {
+              "type": "string",
+              "minLength": 1
+            },
+            "stop": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "feedback": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "cue",
+          "target",
+          "trigger",
+          "visibleFeedback",
+          "oncePerEvent"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cue": {
+            "enum": [
+              "success",
+              "error",
+              "complete",
+              "notification"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1
+          },
+          "trigger": {
+            "type": "string",
+            "minLength": 1
+          },
+          "visibleFeedback": {
+            "type": "string",
+            "minLength": 1
+          },
+          "oncePerEvent": {
+            "type": "boolean",
+            "const": true
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "selectedStyle": {
+            "const": "soft"
+          }
+        },
+        "required": [
+          "selectedStyle"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "userChoice": {
+            "type": "object",
+            "properties": {
+              "style": {
+                "const": "soft"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "selectedStyle": {
+            "const": "tactile"
+          }
+        },
+        "required": [
+          "selectedStyle"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "userChoice": {
+            "type": "object",
+            "properties": {
+              "style": {
+                "const": "tactile"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "selectedStyle": {
+            "const": "playful"
+          }
+        },
+        "required": [
+          "selectedStyle"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "userChoice": {
+            "type": "object",
+            "properties": {
+              "style": {
+                "const": "playful"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "selectedStyle": {
+            "const": "off"
+          }
+        },
+        "required": [
+          "selectedStyle"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "userChoice": {
+            "type": "object",
+            "properties": {
+              "style": {
+                "const": "off"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "selectedStyle": {
+            "const": "off"
+          }
+        },
+        "required": [
+          "selectedStyle"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "controls": {
+            "type": "null"
+          },
+          "feedback": {
+            "type": "array",
+            "maxItems": 0
+          }
+        }
+      },
+      "else": {
+        "type": "object",
+        "properties": {
+          "controls": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "enable",
+              "disable",
+              "mute",
+              "volume",
+              "stop"
+            ],
+            "properties": {
+              "enable": {
+                "type": "string",
+                "minLength": 1
+              },
+              "disable": {
+                "type": "string",
+                "minLength": 1
+              },
+              "mute": {
+                "type": "string",
+                "minLength": 1
+              },
+              "volume": {
+                "type": "string",
+                "minLength": 1
+              },
+              "stop": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "feedback": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}
