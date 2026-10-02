@@ -1,6 +1,6 @@
 # Sounds for Agents
 
-Original interface sounds and with agent skill.
+Original interface sounds and agent skill.
 
 The library includes all twelve cues from the approved listening preview: **Soft**, **Tactile**, and **Playful**, each with **success**, **error**, **completion**, and **notification**. The API calls completion `complete`.
 
