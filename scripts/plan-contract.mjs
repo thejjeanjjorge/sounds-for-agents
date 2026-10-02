@@ -6,13 +6,26 @@ export const soundPlanSchema = JSON.parse(
 );
 const validateSchema = new Ajv({ allErrors: true, strict: true }).compile(soundPlanSchema);
 
+/** Says what a field must be, not only that it differs: Ajv's own wording for a constant is "must be equal to constant". */
+function describeSchemaError(error) {
+  const path = error.instancePath || '/';
+  if (error.keyword === 'const') return `${path} must be ${JSON.stringify(error.params.allowedValue)}`;
+  if (error.keyword === 'enum') {
+    return `${path} must be one of ${error.params.allowedValues.map(value => JSON.stringify(value)).join(', ')}`;
+  }
+  return `${path} ${error.message}`;
+}
+
 /**
  * Checks the recorded plan and vocabulary. A passing result does not prove
  * human consent or authorize consuming-app edits.
  */
 export function validatePlan(plan) {
   if (!validateSchema(plan)) {
-    return validateSchema.errors.map(error => `${error.instancePath || '/'} ${error.message}`);
+    return validateSchema.errors
+      // A failed if/then only repeats the specific error reported just before it.
+      .filter(error => error.keyword !== 'if')
+      .map(describeSchemaError);
   }
   const errors = [];
   const seen = new Set();
